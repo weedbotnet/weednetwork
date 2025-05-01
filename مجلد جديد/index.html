@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" class="u-responsive-xl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEED THE STRONGEST .</title>
+    <link rel="icon" href="pics/weed.png" type="image/icon type">
+    <style>
+        /* WEED + CSS 3D Theme */
+        :root {
+            --weed-green: #6566b9;
+            --CSS-purple: #90d892;
+            --dark-bg: #121212;
+            --light-text: #e0e0e0;
+            --error-red: #ec6960;
+            --success-green: #4CAF50;
+        }
+    
+        html, body {
+            overflow-x: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('download.gif');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 18, 18, 0.85);
+            z-index: -1;
+        }
+
+        .u-header {
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--weed-green);
+            backdrop-filter: blur(5px);
+        }
+
+        .u-text-1 {
+            color: transparent;
+            background: linear-gradient(90deg, var(--weed-green), var(--CSS-purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 0 0 10px rgba(24, 61, 25, 0.7);
+            font-size: 3rem;
+            margin: 2rem auto;
+            text-align: center;
+        }
+
+        .u-section-1 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+            width: 100%;
+        }
+
+        .u-custom-html-1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 90%;
+            margin: 0 auto;
+        }
+
+        #visualzCfx {
+            background: rgba(30, 30, 30, 0.8);
+            border: 2px solid var(--weed-green);
+            color: white;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+            backdrop-filter: blur(5px);
+            text-align: center;
+        }
+
+        #visualzBtn {
+            background: linear-gradient(145deg, var(--weed-green), #2E7D32);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.5);
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        #visualzBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.7);
+            background: linear-gradient(145deg, #2E7D32, var(--weed-green));
+        }
+
+        /* Server Info Groups */
+        .u-group {
+            background: rgba(20, 20, 20, 0.95);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px auto;
+            width: 100%;
+            max-width: 800px;
+            border: 1px solid var(--weed-green);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        /* First group styling */
+        #serverInfoGroup1 {
+            max-width: 900px;
+            padding: 30px;
+        }
+
+        .u-group:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Rest of your CSS remains the same */
+        .u-footer {
+            background: rgba(18, 18, 18, 0.8);
+            border-top: 1px solid var(--weed-green);
+            padding: 1rem 0;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .error-message {
+            color: var(--error-red);
+            background: rgba(30, 30, 30, 0.8);
+            border: 2px solid var(--error-red);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+            width: 100%;
+        }
+
+        .success-message {
+            color: var(--success-green);
+            background: rgba(30, 30, 30, 0.8);
+            border: 2px solid var(--success-green);
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 10px;
+            display: none;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+            width: 100%;
+        }
+
+        .server-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(76, 175, 80, 0.1);
+            align-items: center;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: var(--weed-green);
+        }
+
+        .info-value {
+            color: var(--light-text);
+            word-break: break-all;
+            text-align: right;
+            max-width: 60%;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            border: 4px solid rgba(60, 0, 226, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--weed-green);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .server-header {
+            color: var(--weed-green);
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--weed-green);
+            padding-bottom: 10px;
+        }
+
+        .copy-btn {
+            background: rgba(60, 0, 226, 0.3);
+            color: var(--weed-green);
+            border: 1px solid var(--weed-green);
+            border-radius: 4px;
+            padding: 2px 8px;
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(60, 0, 226, 0.692);
+        }
+
+        .parent {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .child, .childServerInfo {
+            flex: 1;
+            min-width: 150px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body class="u-body">
+    <!-- Your HTML content remains exactly the same -->
+    <header class="u-clearfix u-header" id="sec-b6fa">
+        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+            <nav class="u-menu u-menu-dropdown u-offcanvas u-menu-1">
+                <div class="menu-collapse u-custom-font u-font-arial">
+                    <a class="u-button-style u-nav-link" href="#">
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="u-align-center u-clearfix u-section-1" id="sec-01d9">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <h1 class="u-text u-title u-text-1">WEED CFX FINDER</h1>
+            
+            <div class="u-clearfix u-custom-html u-custom-html-1">
+                <input type="text" id="visualzCfx" placeholder="Enter CFX.re Join Link (cfx.re/join/abc123)">
+                <button id="visualzBtn">SEARCH</button>
+                <div id="loadingSpinner" class="loading-spinner"></div>
+                <div id="errorMessage" class="error-message">Invalid CFX.re link! Please enter a valid link.</div>
+                <div id="successMessage" class="success-message">Server information retrieved successfully!</div>
+                
+                <!-- Server Info Groups -->
+                <div class="u-group" id="serverInfoGroup1">
+                    <div class="server-header">Server Information</div>
+                    <div class="server-info" id="serverName">
+                        <!-- Server name will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="u-group" id="serverInfoGroup2">
+                    <div class="server-header">Connection Details</div>
+                    <div class="server-info" id="serverAddress">
+                        <!-- Address will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="u-group" id="serverInfoGroup3">
+                    <div class="server-header">Server Details</div>
+                    <div class="parent">
+                        <div class="child" id="serverGamebuild">
+                            <!-- Gamebuild will be populated here -->
+                        </div>
+                        <div class="child" id="serverPlayers">
+                            <!-- Players will be populated here -->
+                        </div>
+                        <div class="child" id="serverOnesync">
+                            <!-- Onesync will be populated here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="u-group" id="serverInfoGroup4">
+                    <div class="server-header">Location Info</div>
+                    <div class="parent">
+                        <div class="childServerInfo" id="serverCountry">
+                            <!-- Country will be populated here -->
+                        </div>
+                        <div class="childServerInfo" id="serverISP">
+                            <!-- ISP will be populated here -->
+                        </div>
+                    </div>
+                    <div class="info-row" style="margin-top: 10px; justify-content: center;">
+                        <button id="copyLocationBtn" class="copy-btn" style="padding: 5px 15px; font-size: 0.9rem;">
+                            Copy All Location Info
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="u-group" id="serverInfoGroup5">
+                    <div class="server-header">Owner Info</div>
+                    <div class="server-info" id="serverOwner">
+                        <!-- Owner info will be populated here -->
+                    </div>
+                </div>
+                
+                <script>
+                    // Your JavaScript remains exactly the same
+                    const getBtn = document.getElementById('visualzBtn');
+                    const cfxInput = document.getElementById('visualzCfx');
+                    const errorMessage = document.getElementById('errorMessage');
+                    const successMessage = document.getElementById('successMessage');
+                    const loadingSpinner = document.getElementById('loadingSpinner');
+                    
+                    // Function to extract server ID from CFX link
+                    function extractServerId(link) {
+                        const match = link.match(/(?:cfx\.re\/join\/|connect\/)?([a-z0-9]{6,8})/i);
+                        return match ? match[1] : null;
+                    }
+                    
+                    // Function to fetch server data
+                    async function fetchServerData(serverId) {
+                        try {
+                            loadingSpinner.style.display = 'block';
+                            getBtn.disabled = true;
+                            getBtn.textContent = 'Searching...';
+                            
+                            const response = await fetch(`https://servers-frontend.fivem.net/api/servers/single/${serverId}`);
+                            if (!response.ok) {
+                                throw new Error('Server not found or API error');
+                            }
+                            return await response.json();
+                        } catch (error) {
+                            console.error('Error fetching server data:', error);
+                            throw error;
+                        } finally {
+                            loadingSpinner.style.display = 'none';
+                            getBtn.disabled = false;
+                            getBtn.textContent = 'SEARCH';
+                        }
+                    }
+                    
+                    // Enhanced function to fetch IP geolocation data
+                    async function fetchIPGeoData(ip) {
+                        try {
+                            if (!ip || ip === 'N/A') return null;
+                            
+                            // Using ipapi.co with JSON format
+                            const response = await fetch(`https://ipapi.co/${ip}/json/`);
+                            
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            
+                            const data = await response.json();
+                            
+                            if (data && !data.error) {
+                                return {
+                                    ip: data.ip,
+                                    country: data.country_name,
+                                    countryCode: data.country_code,
+                                    region: data.region,
+                                    city: data.city,
+                                    isp: data.org,
+                                    org: data.org,
+                                    as: data.asn
+                                };
+                            } else {
+                                console.warn('IP API returned error:', data);
+                                return null;
+                            }
+                        } catch (error) {
+                            console.error('Error fetching geolocation data:', error);
+                            return null;
+                        }
+                    }
+                    
+                    // Function to fetch client connection data
+                    async function fetchClientData(owner, visualzIP) {
+                        try {
+                            const proxyUrl = 'https://visualz-fix-cors.herokuapp.com/';
+                            const endpoints = [
+                                `${proxyUrl}https://${owner}-${visualzIP}.users.cfx.re/client`,
+                                `${proxyUrl}https://${owner}-${visualzIP}.users.cfx.re/client`
+                            ];
+                            
+                            for (const endpoint of endpoints) {
+                                try {
+                                    const response = await fetch(endpoint, {
+                                        method: 'POST',
+                                        body: 'method=getEndpoints'
+                                    });
+                                    if (response.ok) return await response.json();
+                                } catch (e) {
+                                    console.warn(`Failed to fetch from ${endpoint}:`, e);
+                                }
+                            }
+                            throw new Error('All client endpoints failed');
+                        } catch (error) {
+                            console.error('Error fetching client data:', error);
+                            return null;
+                        }
+                    }
+                    
+                    // Function to clean server name
+                    function cleanServerName(text) {
+                        if (!text) return 'N/A';
+                        return text.replace(/\^[0-9]/g, "");
+                    }
+
+                    // Function to copy text to clipboard
+                    function copyToClipboard(elementId) {
+                        const element = document.getElementById(elementId);
+                        const text = element.innerText;
+                        navigator.clipboard.writeText(text).then(() => {
+                            // Show temporary feedback
+                            const btn = element.nextElementSibling;
+                            if (btn && btn.classList.contains('copy-btn')) {
+                                btn.textContent = 'Copied!';
+                                setTimeout(() => {
+                                    btn.textContent = 'Copy';
+                                }, 2000);
+                            }
+                        }).catch(err => {
+                            console.error('Failed to copy text: ', err);
+                        });
+                    }
+
+                    // Function to copy all location info
+                    function copyAllLocationInfo() {
+                        const country = document.getElementById('countryValue')?.innerText || 'N/A';
+                        const region = document.getElementById('regionValue')?.innerText || 'N/A';
+                        const city = document.getElementById('cityValue')?.innerText || 'N/A';
+                        const isp = document.getElementById('ispValue')?.innerText || 'N/A';
+                        const org = document.getElementById('orgValue')?.innerText || 'N/A';
+                        const as = document.getElementById('asValue')?.innerText || 'N/A';
+                        
+                        const allInfo = `Country: ${country}\nRegion: ${region}\nCity: ${city}\nISP: ${isp}\nOrganization: ${org}\nAS Number: ${as}`;
+                        
+                        navigator.clipboard.writeText(allInfo).then(() => {
+                            const btn = document.getElementById('copyLocationBtn');
+                            btn.textContent = 'Copied All!';
+                            setTimeout(() => {
+                                btn.textContent = 'Copy All Location Info';
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Failed to copy location info: ', err);
+                        });
+                    }
+                    
+                    // Main function to handle CFX link processing
+                    const visualzApi = async () => {
+                        const cfxLink = cfxInput.value.trim();
+                        const serverId = extractServerId(cfxLink);
+                        
+                        if (!serverId) {
+                            errorMessage.textContent = 'Invalid CFX.re link! Format: cfx.re/join/abc123 or just abc123';
+                            errorMessage.style.display = 'block';
+                            successMessage.style.display = 'none';
+                            hideAllInfoGroups();
+                            
+                            setTimeout(() => {
+                                errorMessage.style.display = 'none';
+                            }, 5000);
+                            return;
+                        }
+                        
+                        try {
+                            const serverData = await fetchServerData(serverId);
+                            
+                            if (!serverData || !serverData.Data) {
+                                throw new Error('Server data incomplete');
+                            }
+                            
+                            // Show all info groups
+                            showAllInfoGroups();
+                            
+                            // Adjust title margin
+                            document.querySelector('.u-text-1').style.margin = '125px auto 0';
+                            
+                            // Populate server name with copy button
+                            document.getElementById('serverName').innerHTML = `
+                                <div class="info-row">
+                                    <span class="info-label">Server Name</span>
+                                    <span class="info-value">
+                                        <span id="serverNameValue">${cleanServerName(serverData.Data?.hostname)}</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('serverNameValue')">Copy</button>
+                                    </span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Server ID</span>
+                                    <span class="info-value">
+                                        <span id="serverIdValue">${serverId.toUpperCase()}</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('serverIdValue')">Copy</button>
+                                    </span>
+                                </div>
+                            `;
+                            
+                            // Populate gamebuild with copy button
+                            document.getElementById('serverGamebuild').innerHTML = `
+                                <div class="info-row">
+                                    <span class="info-label">Gamebuild</span>
+                                    <span class="info-value">
+                                        <span id="gamebuildValue">${serverData.Data?.vars?.sv_enforceGameBuild || 'N/A'}</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('gamebuildValue')">Copy</button>
+                                    </span>
+                                </div>
+                            `;
+                            
+                            // Populate players with copy button
+                            document.getElementById('serverPlayers').innerHTML = `
+                                <div class="info-row">
+                                    <span class="info-label">Players</span>
+                                    <span class="info-value">
+                                        <span id="playersValue">${serverData.Data?.clients || 0}/${serverData.Data?.sv_maxclients || 0}</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('playersValue')">Copy</button>
+                                    </span>
+                                </div>
+                            `;
+                            
+                            // Populate onesync with copy button
+                            document.getElementById('serverOnesync').innerHTML = `
+                                <div class="info-row">
+                                    <span class="info-label">Onesync</span>
+                                    <span class="info-value">
+                                        <span id="onesyncValue">${serverData.Data?.vars?.onesync_enabled || 'N/A'}</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('onesyncValue')">Copy</button>
+                                    </span>
+                                </div>
+                            `;
+                            
+                            // Populate owner with copy button
+                            document.getElementById('serverOwner').innerHTML = `
+                                <div class="info-row">
+                                    <span class="info-label">Owner Profile</span>
+                                    <span class="info-value">
+                                        <span id="ownerProfileValue">${serverData.Data?.ownerProfile || 'N/A'}</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('ownerProfileValue')">Copy</button>
+                                    </span>
+                                </div>
+                            `;
+                            
+                            // Handle IP address and geolocation
+                            let ipAddress = 'N/A';
+                            let port = 'N/A';
+                            
+                            // Check connectEndPoints first
+                            if (serverData.Data?.connectEndPoints?.[0]) {
+                                const endpoint = serverData.Data.connectEndPoints[0];
+                                if (endpoint.startsWith('http')) {
+                                    // If it's a URL, try to get IP via client endpoint
+                                    const clientData = await fetchClientData(serverData.Data.ownerName, serverId);
+                                    if (clientData && clientData[0]) {
+                                        ipAddress = clientData[0].split(':')[0] || 'N/A';
+                                        port = clientData[0].split(':')[1] || 'N/A';
+                                    }
+                                } else {
+                                    // Direct IP:port format
+                                    const parts = endpoint.split(':');
+                                    ipAddress = parts[0] || 'N/A';
+                                    port = parts[1] || 'N/A';
+                                }
+                            } else {
+                                // Fallback to client endpoint if no connectEndPoints
+                                const clientData = await fetchClientData(serverData.Data.ownerName, serverId);
+                                if (clientData && clientData[0]) {
+                                    ipAddress = clientData[0].split(':')[0] || 'N/A';
+                                    port = clientData[0].split(':')[1] || 'N/A';
+                                }
+                            }
+                            
+                            // Populate address with copy button
+                            document.getElementById('serverAddress').innerHTML = `
+                                <div class="info-row">
+                                    <span class="info-label">Server Address</span>
+                                    <span class="info-value">
+                                        <span id="serverAddressValue">${ipAddress}:${port}</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('serverAddressValue')">Copy</button>
+                                    </span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">CFX Join Link</span>
+                                    <span class="info-value">
+                                        <span id="cfxLinkValue">cfx.re/join/${serverId}</span>
+                                        <button class="copy-btn" onclick="copyToClipboard('cfxLinkValue')">Copy</button>
+                                    </span>
+                                </div>
+                            `;
+                            
+                            // Fetch and display geolocation if IP is available
+                            if (ipAddress && ipAddress !== 'N/A') {
+                                const geoData = await fetchIPGeoData(ipAddress);
+                                if (geoData) {
+                                    document.getElementById('serverCountry').innerHTML = `
+                                        <div class="info-row">
+                                            <span class="info-label">Country</span>
+                                            <span class="info-value">
+                                                <span id="countryValue">${geoData.country || 'N/A'} (${geoData.countryCode || 'N/A'})</span>
+                                                <button class="copy-btn" onclick="copyToClipboard('countryValue')">Copy</button>
+                                            </span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">Region</span>
+                                            <span class="info-value">
+                                                <span id="regionValue">${geoData.region || 'N/A'}</span>
+                                                <button class="copy-btn" onclick="copyToClipboard('regionValue')">Copy</button>
+                                            </span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">City</span>
+                                            <span class="info-value">
+                                                <span id="cityValue">${geoData.city || 'N/A'}</span>
+                                                <button class="copy-btn" onclick="copyToClipboard('cityValue')">Copy</button>
+                                            </span>
+                                        </div>
+                                    `;
+                                    
+                                    document.getElementById('serverISP').innerHTML = `
+                                        <div class="info-row">
+                                            <span class="info-label">ISP</span>
+                                            <span class="info-value">
+                                                <span id="ispValue">${geoData.isp || 'N/A'}</span>
+                                                <button class="copy-btn" onclick="copyToClipboard('ispValue')">Copy</button>
+                                            </span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">Organization</span>
+                                            <span class="info-value">
+                                                <span id="orgValue">${geoData.org || 'N/A'}</span>
+                                                <button class="copy-btn" onclick="copyToClipboard('orgValue')">Copy</button>
+                                            </span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">AS Number</span>
+                                            <span class="info-value">
+                                                <span id="asValue">${geoData.as || 'N/A'}</span>
+                                                <button class="copy-btn" onclick="copyToClipboard('asValue')">Copy</button>
+                                            </span>
+                                        </div>
+                                    `;
+                                } else {
+                                    document.getElementById('serverCountry').innerHTML = `
+                                        <div class="info-row">
+                                            <span class="info-label">Country</span>
+                                            <span class="info-value">N/A</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">Region</span>
+                                            <span class="info-value">N/A</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">City</span>
+                                            <span class="info-value">N/A</span>
+                                        </div>
+                                    `;
+                                    
+                                    document.getElementById('serverISP').innerHTML = `
+                                        <div class="info-row">
+                                            <span class="info-label">ISP</span>
+                                            <span class="info-value">N/A</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">Organization</span>
+                                            <span class="info-value">N/A</span>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">AS Number</span>
+                                            <span class="info-value">N/A</span>
+                                        </div>
+                                    `;
+                                }
+                            } else {
+                                document.getElementById('serverCountry').innerHTML = `
+                                    <div class="info-row">
+                                        <span class="info-label">Country</span>
+                                        <span class="info-value">IP not available</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Region</span>
+                                        <span class="info-value">IP not available</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">City</span>
+                                        <span class="info-value">IP not available</span>
+                                    </div>
+                                `;
+                                
+                                document.getElementById('serverISP').innerHTML = `
+                                    <div class="info-row">
+                                        <span class="info-label">ISP</span>
+                                        <span class="info-value">IP not available</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">Organization</span>
+                                        <span class="info-value">IP not available</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-label">AS Number</span>
+                                        <span class="info-value">IP not available</span>
+                                    </div>
+                                `;
+                            }
+                            
+                            // Show success message
+                            successMessage.style.display = 'block';
+                            errorMessage.style.display = 'none';
+                            
+                            setTimeout(() => {
+                                successMessage.style.display = 'none';
+                            }, 3000);
+                            
+                        } catch (error) {
+                            errorMessage.innerHTML = `Failed to fetch server data.<br><br>
+                                Possible reasons:<br>
+                                1. Server is offline/private<br>
+                                2. IP not exposed by server<br>
+                                3. Temporary API issue<br><br>
+                                CFX Code: ${serverId}`;
+                            errorMessage.style.display = 'block';
+                            successMessage.style.display = 'none';
+                            hideAllInfoGroups();
+                            
+                            setTimeout(() => {
+                                errorMessage.style.display = 'none';
+                            }, 5000);
+                        }
+                    };
+                    
+                    // Helper functions to show/hide info groups
+                    function showAllInfoGroups() {
+                        for (let i = 1; i <= 5; i++) {
+                            document.getElementById(`serverInfoGroup${i}`).style.display = 'flex';
+                        }
+                    }
+                    
+                    function hideAllInfoGroups() {
+                        for (let i = 1; i <= 5; i++) {
+                            document.getElementById(`serverInfoGroup${i}`).style.display = 'none';
+                        }
+                    }
+                    
+                    // Event listeners
+                    getBtn.addEventListener('click', visualzApi);
+                    cfxInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') visualzApi();
+                    });
+
+                    // Add event listener for the copy all button
+                    document.getElementById('copyLocationBtn').addEventListener('click', copyAllLocationInfo);
+                </script>
+            </div>
+        </div>
+    </section>
+
+    <footer class="u-align-left u-clearfix u-footer" id="sec-a500">
+        <div class="u-clearfix u-sheet u-sheet-1">
+            <p>© 2025 WEED</p>
+        </div>
+    </footer>
+</body>
+</html>
