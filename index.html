@@ -2,7 +2,7 @@
 <html style="font-size:16px" class="u-responsive-xl">
 <head>
 <link href="weed.png" rel="icon" type="image/x-icon"/> 
-<script src="devtools-detector.js"></script>
+<script src="handleDevToolsDetection.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>WEED THE STRONGEST .</title> 
@@ -405,93 +405,7 @@ body::before {
 <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
 
 <script>
-// DevTools Protection
-(function() {
-  'use strict';
-  
-  const devToolsWarning = document.getElementById('devToolsWarning');
-  const banTimerElement = document.getElementById('banTimer');
-  const banMessageElement = document.getElementById('banMessage');
-  let devToolsDetected = false;
-  let banInterval;
-  
-  const detectionConfig = {
-    checkInterval: 2000,
-    maxDetectionsBeforeAction: 3,
-    resizeThreshold: 200,
-    redirectDelay: 10,
-    redirectUrl: 'about:blank'
-  };
-  
-  function checkForDevTools() {
-    if (devToolsDetected) return;
-    
-    let detectionCount = 0;
-    
-    // Check window size difference
-    const widthDiff = window.outerWidth - window.innerWidth;
-    const heightDiff = window.outerHeight - window.innerHeight;
-    if (widthDiff > detectionConfig.resizeThreshold || heightDiff > detectionConfig.resizeThreshold) {
-      detectionCount++;
-    }
-    
-    // Check function toString tampering
-    try {
-      const dummy = new Function('debugger');
-      if (dummy.toString().length !== 19) {
-        detectionCount++;
-      }
-    } catch(e) {
-      detectionCount++;
-    }
-    
-    // Check debugger performance
-    const start = window.performance.now();
-    debugger;
-    const end = window.performance.now();
-    if (end - start > 100) {
-      detectionCount += 2;
-    }
-    
-    if (detectionCount >= detectionConfig.maxDetectionsBeforeAction) {
-      handleDevToolsDetection();
-    }
-  }
-  
-  function handleDevToolsDetection() {
-    if (devToolsDetected) return;
-    devToolsDetected = true;
-    
-    // Show warning
-    devToolsWarning.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    
-    // Disable all interactive elements
-    document.querySelectorAll('button, input, a').forEach(el => {
-      el.style.pointerEvents = 'none';
-      el.style.opacity = '0.5';
-    });
-    
-    startRedirectTimer();
-  }
-  
-  function startRedirectTimer() {
-    let secondsLeft = detectionConfig.redirectDelay;
-    banTimerElement.textContent = secondsLeft;
-    
-    if (banInterval) clearInterval(banInterval);
-    
-    banInterval = setInterval(() => {
-      secondsLeft--;
-      banTimerElement.textContent = secondsLeft;
-      
-      if (secondsLeft <= 0) {
-        clearInterval(banInterval);
-        window.location.href = detectionConfig.redirectUrl;
-      }
-    }, 1000);
-  }
-  
+
   // Start detection
   setInterval(checkForDevTools, detectionConfig.checkInterval);
   
@@ -527,7 +441,6 @@ body::before {
       document.title = "WEED THE STRONGEST";
     }
   });
-})();
 
 // Main application code
 document.addEventListener('DOMContentLoaded', function() {
@@ -952,5 +865,135 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('copyLocationBtn').addEventListener('click', copyAllLocationInfo);
 });
 </script>
+<script>// Nuclear DevTools Protection - Guaranteed to Work
+  (function() {
+      'use strict';
+      
+      const DESTROY_MESSAGE = "SECURITY VIOLATION - TERMINATING";
+      let isTerminated = false;
+      let lastCheck = Date.now();
+      let lastWidth = window.innerWidth;
+      let lastHeight = window.innerHeight;
+  
+      function nukePage() {
+          if (isTerminated) return;
+          isTerminated = true;
+          
+          // 1. Immediate visual feedback
+          document.body.innerHTML = `
+              <style>
+                  body { margin:0; padding:0; background:#000; color:red; 
+                         font-family:Arial; height:100vh; display:flex; 
+                         justify-content:center; align-items:center; }
+                  #nuke-msg { font-size:24px; padding:20px; border:2px solid red; 
+                              background:rgba(0,0,0,0.9); text-align:center; }
+              </style>
+              <div id="nuke-msg">${DESTROY_MESSAGE}</div>
+          `;
+          
+          // 2. Disable all interactions
+          document.body.style.pointerEvents = "none";
+          
+          // 3. Aggressive termination sequence
+          function terminate() {
+              // Try standard close first
+              try { window.close(); } catch(e) {}
+              
+              // Redirect to blank page (replace prevents back button)
+              try { window.location.replace("about:blank"); } catch(e) {}
+              
+              // Final measures if still open
+              setTimeout(() => {
+                  // Make console unusable
+                  const consoleFlood = setInterval(() => {
+                      console.clear();
+                      for (let i = 0; i < 100; i++) {
+                          console.error("SECURITY VIOLATION DETECTED");
+                      }
+                  }, 50);
+                  
+                  // Continuously modify page
+                  const pageDestroyer = setInterval(() => {
+                      document.body.innerHTML += " ";
+                      try { window.location.replace("about:blank"); } catch(e) {}
+                  }, 100);
+              }, 300);
+          }
+          
+          terminate();
+      }
+  
+      // Enhanced detection methods
+      function isDevToolsOpen() {
+          // Method 1: Window size difference (most reliable)
+          const widthThreshold = navigator.userAgent.includes('Firefox') ? 250 : 160;
+          const widthDiff = Math.abs(window.outerWidth - window.innerWidth);
+          const heightDiff = Math.abs(window.outerHeight - window.innerHeight);
+          
+          if (widthDiff > widthThreshold || heightDiff > 200) return true;
+          
+          // Method 3: Function toString check
+          try {
+              const fn = function() {};
+              fn.toString = function() { return "monitored"; };
+              if (fn.toString() !== "monitored") return true;
+          } catch(e) {
+              return true;
+          }
+          
+          return false;
+      }
+  
+      // Special keyboard detection
+      document.addEventListener('keydown', (e) => {
+          if (e.key === 'F12' || e.keyCode === 123 || 
+              (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.keyCode === 73)) ||
+              (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.keyCode === 74)) ||
+              (e.ctrlKey && e.key === 'U')) {
+              e.preventDefault();
+              nukePage();
+              return false;
+          }
+      });
+  
+      // Right-click prevention
+      document.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+          nukePage();
+          return false;
+      });
+  
+      // MutationObserver for DOM inspection
+      const observer = new MutationObserver(() => {
+          if (isDevToolsOpen()) nukePage();
+      });
+      observer.observe(document, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          characterData: true
+      });
+  
+      // Continuous monitoring (every 200ms)
+      const watcher = setInterval(() => {
+          if (isDevToolsOpen()) {
+              clearInterval(watcher);
+              nukePage();
+          }
+          
+          // Check for sudden resize changes
+          if (Math.abs(window.innerWidth - lastWidth) > 100 || 
+              Math.abs(window.innerHeight - lastHeight) > 100) {
+              clearInterval(watcher);
+              nukePage();
+          }
+          
+          lastWidth = window.innerWidth;
+          lastHeight = window.innerHeight;
+      }, 200);
+  
+      // Initial check
+      if (isDevToolsOpen()) nukePage();
+  })();</script>
 </body>
 </html>
